@@ -84,6 +84,8 @@ void usage(char *name) {
     printf("\t--verbose  increase verbose level\n\n");
     printf("\t--port {port}  listening port (default 1080)\n");
     printf("\t--bind {ip} listening on ip (default all)\n");
+	printf("\t--remote {ip} bind remote ip (default none)\n");
+	printf("\t--rport {port} bind remote port inc (default 0)\n");
     printf("\t--file {file}  see man 5 ssocksd.conf\n");
     printf("\t--auth {file}  see man 5 ssocksd.auth\n");
     printf("\t--log {file}   if set connections are log in this file\n");
@@ -122,6 +124,8 @@ void parseArg(int argc, char *argv[]) {
             {"guest",no_argument,       0, 'g'},
             {"bind", required_argument, 0, 'b'},
             {"port", required_argument, 0, 'p'},
+			{"remote", required_argument, 0, 'r'},
+			{"rport", required_argument, 0, 'o'},
             {"file", required_argument, 0, 'f'},
             {"auth", required_argument, 0, 'a'},
             {"log",  required_argument, 0, 'l'},
@@ -188,6 +192,14 @@ void parseArg(int argc, char *argv[]) {
                        sizeof(globalArgsServer.bindAddr));
             // globalArgsServer.bindAddr = optarg;
             break;
+
+			case 'r':
+				set_bind_remote_ip(optarg);
+				break;
+
+			case 'o':
+				set_bind_remote_port(0);
+				break;
 
         case 'l':
             strncpy_sx(globalArgsServer.filelog, optarg,

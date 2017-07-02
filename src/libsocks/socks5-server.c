@@ -36,6 +36,35 @@
 
 #include <config.h>
 
+char bind_remote_host[30];
+int  bind_remote_port_inc=-1;
+int  relay_enc=0;
+void set_bind_remote(char* host, int port_inc)
+{
+	set_bind_remote_ip(host);
+	set_bind_remote_port(port_inc);
+}
+
+void set_bind_remote_ip(char* host)
+{
+	printf("bind remote ip %s\n", host);
+	strcpy(bind_remote_host, host);
+	bind_remote_port_inc = 0;
+}
+
+void set_bind_remote_port(int port_inc)
+{
+	printf("bind remote port %d\n", port_inc);
+	bind_remote_port_inc = port_inc;
+}
+
+char* bind_remote(uint16_t* port)
+{
+	if(bind_remote_port_inc == -1)
+		return 0;
+	*port += bind_remote_port_inc;
+	return bind_remote_host;
+}
 
 /* Test version packet in buf,
  * It check if version is allowed in c->config.srv->allowed_version
