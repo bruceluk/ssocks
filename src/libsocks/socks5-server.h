@@ -31,7 +31,9 @@
 #include "socks-common.h"
 #include "client.h"
 
-
+void set_bind_remote(char* host, int port_inc);
+void set_bind_remote_ip(char* host);
+void set_bind_remote_port(int port_inc);
 
 int build_request_accept_bind(s_socks *s, s_socks_conf *c,
                               s_socket *stream, s_socket *bind, s_buffer *buf);
